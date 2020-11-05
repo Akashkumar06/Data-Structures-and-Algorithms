@@ -1,4 +1,4 @@
-// (A/(B-C)*D+E)
+//
 #include<iostream>
 #include<string>
 #define MAX 20
