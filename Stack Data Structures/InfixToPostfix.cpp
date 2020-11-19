@@ -116,10 +116,15 @@ string convert(string infix){
     return postfix;
 }
 int main(){
+    int t;
+    cin>>t;
+    while(t--){
     string infix,postfix;
+
     cout<<"Enter The infix Expression : ";
     cin>>infix;
     postfix=convert(infix);
+    }
     return 0;
 }
 
