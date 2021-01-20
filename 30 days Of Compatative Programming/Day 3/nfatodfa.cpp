@@ -7,22 +7,17 @@
 int N_symbols;
 int NFA_states;
 char *NFAtab[STATES][SYMBOLS];
-int DFA_states;/*number of DFA states */
+int DFA_states;
 int DFAtab[STATES][SYMBOLS];
-
-/*Print state-transition table.*/
-
-void put_dfa_table( int tab[][SYMBOLS],/*DFA Table */
-                    int nstates,/*number-of-states */
-                    int nsymbols) /* number of input-symbols */
+void put_dfa_table( int tab[][SYMBOLS],
+                    int nstates,
+                    int nsymbols)
 {
 
 
 int i, j;
 
 puts("STATE TRANSITION TABLE");
-
-/*Input symbols 0 ,1 */
 printf ("Q/E");
 printf (" |");
 
@@ -36,18 +31,13 @@ printf ("\n");
 
 for (i = 0; i <nstates; i++)
  {
-printf(" %2c | ",'A'+i);/*state */
+printf(" %2c | ",'A'+i);
 for (j= 0; j <nsymbols;j++)
 printf(" %2c ",'A'+tab[i][j]);
 printf("\n");
  }
 
 }
-
-
-
-/*lnitialize NFA table.*/
-
 void init_NFA_table()
 
 {
@@ -68,8 +58,6 @@ DFA_states = 0;
 N_symbols = 2;
 
 }
-
-/*String 't' is merged into 's' in an alphabetical order.*/
 void string_merge(char *s, char *t)
 {
 char temp[STATES], *r=temp, *p=s;
@@ -101,7 +89,6 @@ else if(*t)strcat(r,t);
 strcpy(s,temp);
 }
 
-/*Get next state string for current state string.*/
 void get_next_state(char *nextstates, char *cur_states, char *nfa[STATES][SYMBOLS] ,int n_nfa, int symbol)
  {
 
@@ -121,13 +108,13 @@ int state_index(char *state, char statename[][STATES], int *pn)
 
 int i;
 if (!*state)
-return -1 ;/* No next State */
+return -1 ;
 
 for (i = 0; i < *pn; i++)
 if (!strcmp(state, statename[i]))
 return i;
 
-strcpy(statename[i], state); /* New State  Name*/
+strcpy(statename[i], state);
 
 return(*pn)++;
 }
@@ -136,22 +123,22 @@ int nfa_to_dfa(char *nfa[STATES][SYMBOLS],int n_nfa,int n_sym, int dfa[][SYMBOLS
 {
 
 char statename[STATES][STATES];
-int i = 0; /* Current Index of DFA */
-int n = 1; /* No. of DFA States*/
+int i = 0;
+int n = 1;
 
 char nextstate[STATES];
 int j;
-strcpy(statename[0], "0"); /* Start State */
-for (i = 0; i <n;i++) /* For each DFA state */
+strcpy(statename[0], "0");
+for (i = 0; i <n;i++)
 {
-for (j= 0; j <n_sym; j++) /* For each input symbol */
+for (j= 0; j <n_sym; j++)
 {
 get_next_state(nextstate, statename[i], nfa, n_nfa, j);
 dfa[i][j]= state_index(nextstate, statename, &n);
 }
 
 }
-return n; /* No. of DFA States*/
+return n;
 
 }
 
