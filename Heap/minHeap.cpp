@@ -16,47 +16,53 @@ public:
     MinHeap(int capacity);
     void MinHeapify(int);
 
-   int parent(int i) { return i/2; }
+   int parent(int i) { return (i-1)/2; }
 
 
     int left(int i){
-    return 2*i;
-    }    int right(int i){
-    return( 2*i + 1);
+        return( 2*i+1);
+    }
+    int right(int i){
+        return( 2*i+2);
     }
 
     int extractMin();
 
     int getMin(){
-    return harr[1];
+        return harr[0];
     }
-    void insertKey(int k);
+    void insert(int k);
     void deleteKey(int i);
     void decreseKey(int i, int val);
 };
 MinHeap::MinHeap(int cap){
-heap_size=1;
-capacity=cap;
-harr=new int [cap];
+    heap_size=0;
+    capacity=cap;
+    harr=new int [cap];
 }
-void MinHeap::insertKey(int k){
-    if(heap_size==capacity){
-        cout<<"\nOverflow:Could'nt insert the element into the heap"<<endl;
+void MinHeap::insert(int k)
+{
+    if (heap_size == capacity)
+    {
+        cout << "\nOverflow: Could not insertKey\n";
         return;
-
     }
 
+    // First insert the new key at the end
+    heap_size++;
+    int i = heap_size - 1;
+    harr[i] = k;
 
-    harr[heap_size]=k;
-    int i=heap_size;
-    while(i!=1 && harr[parent(i)]>harr[i]){
-        swap(&harr[i],&harr[parent(i)]);
-        i=parent(i);
+    // Fix the min heap property if it is violated
+    while (i != 0 && harr[parent(i)] > harr[i])
+    {
+       swap(&harr[i], &harr[parent(i)]);
+       i = parent(i);
     }
 }
 void MinHeap::decreseKey(int i,int val){
 harr[i]=val;
-while(i!=1 && harr[parent(i)]>harr[i]){
+while(i!=0 &&harr[parent(i)]>harr[i]){
     swap(&harr[i],&harr[parent(i)]);
     i=parent(i);
 
@@ -67,23 +73,25 @@ while(i!=1 && harr[parent(i)]>harr[i]){
 int MinHeap:: extractMin()
 {
 
-    if(heap_size<=1)
+
+        if(heap_size<=0)
             return INT_MAX;
-    if(heap_size==2){
+    if(heap_size==1){
         heap_size--;
-        return harr[1];
+        return harr[0];
     }
 
-    int root = harr[1];
-    harr[1]=harr[heap_size];
+    int root = harr[0];
+    harr[0]=harr[heap_size-1];
     heap_size--;
-    MinHeapify(1);
+    MinHeapify(0);
     return root;
 }
 
 void MinHeap::deleteKey(int i){
-decreseKey(i,INT_MIN);
-extractMin();}
+    decreseKey(i,INT_MIN);
+    extractMin();
+}
 void MinHeap::MinHeapify(int i){
 int l=left(i);
 int r=right(i);
@@ -104,22 +112,21 @@ if(l<heap_size && harr[l]< harr[i])
     *x = *y;
     *y = temp;
 }
-int main(){
+int main()
+{
     MinHeap h(11);
-    h.insertKey(3);
-    h.insertKey(2);
+    h.insert(3);
+    h.insert(2);
     h.deleteKey(1);
-    h.insertKey(5);
-    h.insertKey(4);
-    h.insertKey(45);
-
-    cout<<h.extractMin()<<endl;
-    cout<<h.getMin()<<endl;
-    h.decreseKey(2,1);
-    cout<<h.getMin();
+    h.insert(15);
+    h.insert(5);
+    h.insert(4);
+    h.insert(45);
+    cout << h.extractMin() << " ";
+    cout << h.getMin() << " ";
+    h.decreseKey(2, 1);
+    cout << h.getMin();
     return 0;
-
 }
-
 
 
