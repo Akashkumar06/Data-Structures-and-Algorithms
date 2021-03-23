@@ -31,7 +31,7 @@ while(k<m&&l<n){
             a[i][l]=cont;
         cont++;
         }
-        l++;
+        i++;
     }
 
 }
@@ -52,6 +52,6 @@ int main()
 {
 
 
-    spiralPrint(7, 7);
+    spiralPrint(3, 3);
     return 0;
 }
